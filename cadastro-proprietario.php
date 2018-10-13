@@ -33,7 +33,10 @@ include_once 'util/helper.class.php';
                 <a class="nav-link" href="cadastro-proprietario.php">Cad. Proprietário <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="consulta-livros.php">Cons. Livros</a>
+                <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="controle-vaca.php">Controle de Vaca</a>
               </li>
             </ul>
           </div>

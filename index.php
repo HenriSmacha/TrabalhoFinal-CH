@@ -28,11 +28,17 @@
           <li class="nav-item">
             <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Propietário</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Vaca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="cadastro-proprietario.php">Controle Vaca</a>
+          </li>
         </ul>
       </div>
     </nav>
 
-    <h2>Cadastro de vacas!</h2>
+    <h2>Cadastro de Proprietários para administrar cruza e lactase de gado leiteiro!</h2>
   </div>
 </body>
 </html>
