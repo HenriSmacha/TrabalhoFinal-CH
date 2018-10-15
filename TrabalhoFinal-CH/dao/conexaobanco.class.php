@@ -13,6 +13,7 @@ class ConexaoBanco extends PDO {
         self::$instance = new
         ConexaoBanco("mysql:dbname=fazenda;host=localhost","root","");
       }
+      return self::$instance;
     }catch(PDOException $e){
       echo "Erro ao cadastrar no banco! ".$e;
     }//fecha catch

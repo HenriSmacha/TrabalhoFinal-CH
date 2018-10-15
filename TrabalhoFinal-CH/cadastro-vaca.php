@@ -81,8 +81,8 @@ include_once 'util/helper.class.php';
 
           // echo "<br>".$vac;
           $_SESSION['msg'] = "Vaca cadastrada com sucesso!";
-          header("location:cadastro-vaca.php");
           ob_end_flush();
+          header("location:cadastro-vaca.php");
         }
       ?>
     </div>

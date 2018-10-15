@@ -93,8 +93,8 @@ include_once 'util/helper.class.php';
             $propDAO->cadastrarProprietario($prop);
             // echo "<br>".$prop;
             $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
-            header("location:cadastro-proprietario.php");
             ob_end_flush();
+            header("location:cadastro-proprietario.php");
          }
         ?>
     </div>
