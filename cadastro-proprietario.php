@@ -36,7 +36,10 @@ include_once 'util/helper.class.php';
                 <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="controle-vaca.php">Controle de Vaca</a>
+                <a class="nav-link" href="tabela-vaca.php">Controle de Vaca</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
               </li>
             </ul>
           </div>
@@ -49,8 +52,14 @@ include_once 'util/helper.class.php';
           <div class="form-group">
             <input type="text" name="txtnome" placeholder="Nome do proprietário" class="form-control">
           </div>
-          <!-- <div class="form-group">
+          <div class="form-group">
             <input type="text" name="txtsobrenome" placeholder="Sobrenome do proprietário" class="form-control">
+          </div>
+          <!-- <div>
+            <input type="text" name="txtlogin" placeholder="Login" class="form-control">
+          </div>
+          <div>
+            <input type="password" name="txtsenha" placeholder="Senha" class="form-control">
           </div> -->
           <div class="form-group">
             <input type="text" name="txtpropriedade" placeholder="Nome da propriedade" class="form-control">
@@ -64,13 +73,6 @@ include_once 'util/helper.class.php';
           <div class="form-group">
             <input type="text" name="txtncontato" placeholder="N° de Contato" class="form-control">
           </div>
-          <!-- <div class="form-group">
-            <select name="selgenero" class="form-control">
-              <option value="Terror">Terror</option>
-              <option value="Ação">Ação</option>
-              <option value="Suspense">Suspense</option>
-            </select> -->
-          <!-- </div> -->
           <div class="form-group">
             <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
             <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
@@ -83,7 +85,9 @@ include_once 'util/helper.class.php';
             include 'util/padronizacao.class.php';
 
             $prop = new Proprietario();
-            $prop->nome = $_POST['txtnome'];//$_POST['txtsobrenome']
+            $prop->nome = Padronizacao::nomeSobrenome($_POST['txtnome'],$_POST['txtsobrenome']);
+            // $prop->login = $_POST['txtlogin'];
+            // $prop->password = $_POST['txtsenha'];
             $prop->propriedade = $_POST['txtpropriedade'];
             $prop->localizacao = $_POST['txtlocalizacao'];
             $prop->municipio = $_POST['txtmunicipio'];
@@ -91,12 +95,12 @@ include_once 'util/helper.class.php';
 
             $propDAO = new ProprietarioDAO();
             $propDAO->cadastrarProprietario($prop);
-            //echo "<br>".$prop;
+            echo "<br>".$prop;
             $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
-            header("location:cadastro-proprietario.php");
             ob_end_flush();
+            // header("location:cadastro-proprietario.php");
          }
         ?>
-      </div>
+    </div>
   </body>
 </html>

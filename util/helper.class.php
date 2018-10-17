@@ -1,7 +1,7 @@
 <?php
 class Helper{
 
-  public function alert($msg){
+  public static function alert(String $msg){
     echo "<script>alert('$msg');</script>";
   }
 }

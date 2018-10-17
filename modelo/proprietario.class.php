@@ -1,6 +1,8 @@
 <?php
 class Proprietario{
 
+  // private $login;
+  // private $password;
   private $idProprietario;
   private $nome;
   private $propriedade;

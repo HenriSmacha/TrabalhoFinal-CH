@@ -1,5 +1,5 @@
 <?php
-class ConexaoBanco extends PDO{
+class ConexaoBanco extends PDO {
 
   private static $instance = null;
 
@@ -7,12 +7,13 @@ class ConexaoBanco extends PDO{
     parent::__construct($dsn, $user, $pass);
   }
 
-  public function getInstance(){
+  public static function getInstance(){
     try{
       if(!isset(self::$instance)){
         self::$instance = new
         ConexaoBanco("mysql:dbname=fazenda;host=localhost","root","");
       }
+      return self::$instance;
     }catch(PDOException $e){
       echo "Erro ao cadastrar no banco! ".$e;
     }//fecha catch

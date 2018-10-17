@@ -29,10 +29,13 @@
             <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Propietário</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Vaca</a>
+            <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="cadastro-proprietario.php">Controle Vaca</a>
+            <a class="nav-link" href="tabela-vaca.php">Controle Vaca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
           </li>
         </ul>
       </div>
