@@ -69,8 +69,8 @@ include_once 'util/helper.class.php';
       <?php
         if(isset($_POST['cadastrar'])){
           include 'modelo/vaca.class.php';
-          // include 'dao/vacadao.class.php';
-          // include 'util/padronizacao.class.php';
+          include 'dao/vacadao.class.php';
+          include 'util/padronizacao.class.php';
 
           $vac = new Vaca();
           $vac->nAnimal = $_POST['txtnvaca'];
@@ -79,7 +79,9 @@ include_once 'util/helper.class.php';
           $vac->pelagem = $_POST['txtpelagem'];
           $vac->idade = $_POST['numidade'];
 
-          // echo "<br>".$vac;
+          $vacDAO=new vacaDAO();
+          $vacDAO->cadastrarVaca($vac);
+
           $_SESSION['msg'] = "Vaca cadastrada com sucesso!";
           ob_end_flush();
           header("location:cadastro-vaca.php");
