@@ -136,14 +136,14 @@ $array = $vacDAO->buscarVacas();
           <?php
           foreach($array as $v){ // é L de livro
             echo "<tr>";
-              echo "<td>$v->idvaca</td>";
+              echo "<td>$v->idVaca</td>";
               echo "<td>$v->nAnimal</td>";
               echo "<td>$v->nDeFerro</td>";
               echo "<td>$v->raca</td>";
               echo "<td>$v->pelagem</td>";
               echo "<td>$v->idade</td>";
-              echo "<td><a href='alterar-vaca.php?id=$v->idvaca' class='btn btn-warning'>Alterar</a></td>";
-              echo "<td><a href='consultar-vaca.php?id=$v->idvaca' class='btn btn-danger'>Excluir</a></td>";
+              echo "<td><a href='alterar-vaca.php?id=$v->idVaca' class='btn btn-warning'>Alterar</a></td>";
+              echo "<td><a href='consultar-vaca.php?id=$v->idVaca' class='btn btn-danger'>Excluir</a></td>";
             echo "</tr>";
           }
           ?>

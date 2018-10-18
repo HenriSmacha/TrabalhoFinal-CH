@@ -78,8 +78,8 @@
     }else{
       include_once 'modelo/user.class.php';
 
-      $u = unserialize($_SESSION['privateUser']);
-      echo "<h3>Olá ".$u->login.", seja bem vindo!</h3>";
+      $user = unserialize($_SESSION['privateUser']);
+      echo "<h3>Olá ".$user->login.", seja bem vindo!</h3>";
       ?>
       <form name="deslogar" method="post" action="">
         <div class="form-group">
@@ -100,15 +100,15 @@
       include_once 'dao/userdao.class.php';
       include_once 'util/seguranca.class.php';
 
-      $u = new User();
-      $u->login = $_POST['txtlogin'];
-      $u->senha = Seguranca::criptografarMD5($_POST['txtsenha']);
-      $u->tipo = $_POST['seltipo'];
+      $user = new User();
+      $user->login = $_POST['txtlogin'];
+      $user->senha = Seguranca::criptografarMD5($_POST['txtsenha']);
+      $user->tipo = $_POST['seltipo'];
 
       //echo $u;
 
-      $uDAO = new UsuarioDAO();
-      $usuario = $uDAO->verificarUsuario($u);
+      $userDAO = new UsuarioDAO();
+      $usuario = $userDAO->verificarUsuario($user);
 
       if($usuario == null){
         echo "usuário/senha inválido!";

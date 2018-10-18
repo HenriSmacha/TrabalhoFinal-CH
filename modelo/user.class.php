@@ -17,7 +17,7 @@ class User {
   }//fecha toString
 
   /*
-  senha: fazendamimozinha
+  senha: mimozinha
   insert into usuario(idusuario,login,senha,tipo)
   values(01,"mimozinha","996d836b15da4dd9f945a802a77de03c", "adm")
   */

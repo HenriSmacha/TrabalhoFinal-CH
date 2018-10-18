@@ -112,7 +112,7 @@ $array = $propDAO->buscarProprietario();
         <thead>
           <tr>
             <th>Código</th>
-            <th>login</th>
+            <!-- <th>login</th> -->
             <th>Nome</th>
             <th>Propriedade</th>
             <th>Localização</th>
@@ -125,7 +125,7 @@ $array = $propDAO->buscarProprietario();
         <tfoot>
           <tr>
             <th>Código</th>
-            <th>login</th>
+            <!-- <th>login</th> -->
             <th>Nome</th>
             <th>Propriedade</th>
             <th>Localização</th>
@@ -140,7 +140,7 @@ $array = $propDAO->buscarProprietario();
           foreach($array as $p){ // é L de livro
             echo "<tr>";
               echo "<td>$p->idProprietario</td>";
-              echo "<td>$p->login</td>";
+              // echo "<td>$p->login</td>";
               echo "<td>$p->nome</td>";
               echo "<td>$p->propriedade</td>";
               echo "<td>$p->localizacao</td>";

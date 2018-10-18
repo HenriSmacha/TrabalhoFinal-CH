@@ -1,6 +1,6 @@
 <?php
 require 'conexaobanco.class.php';
-class proprietarioDAO{
+class ProprietarioDAO{
 
   private $conexao = null;
 
@@ -12,15 +12,13 @@ class proprietarioDAO{
 
   public function cadastrarProprietario($prop){
     try{
-      $stat=$this->conexao->prepare("insert into proprietario (idproprietario,nome, login, password,propriedade,localizacao,municipio,ncontato)values(null,?,?,?,?,?,?,?)");
+      $stat=$this->conexao->prepare("insert into proprietario (idproprietario,nome,propriedade,localizacao,municipio,ncontato)values(null,?,?,?,?,?)");
 
       $stat->bindValue(1, $prop->nome);
-      $stat->bindValue(2, $prop->login);
-      $stat->bindValue(3, $prop->password);
-      $stat->bindValue(4, $prop->propriedade);
-      $stat->bindValue(5, $prop->localizacao);
-      $stat->bindValue(6, $prop->municipio);
-      $stat->bindValue(7, $prop->nContato);
+      $stat->bindValue(2, $prop->propriedade);
+      $stat->bindValue(3, $prop->localizacao);
+      $stat->bindValue(4, $prop->municipio);
+      $stat->bindValue(5, $prop->nContato);
       $stat->execute();
     }catch(PDOException $e){
       echo "Erro ao cadastrar! ".$e;
