@@ -37,14 +37,19 @@
           <li class="nav-item">
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário</a>
+          </li>
         </ul>
       </div>
     </nav>
       <!-- // echo isset($_SESSION['msg'])? Helper::alert($_SESSION['msg']) : "";
       // unset($_SESSION['msg']); -->
-    <form name="cadpropr" method="post" action="">
+
+      <!-- PRIMEIRA TABELA -->
+
       <h2>Dados reprodutivos</h2>
-        <div class="table-responsive">
+      <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover table-condensed">
           <thead>
             <tr>
@@ -69,13 +74,23 @@
               <td><input type="text" name="txtparids" placeholder="int. de pasrto(dias)" class="form-control"></td>
             </tr>
             <tr>
-              <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
-              <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
             </tr>
-          <tbody>
-        </div>
-        <h2>Dados leiteiro</h2>
-        <div class="table-responsive">
+
+          </tbody>
+        </table>
+      </div>
+
+      <form name="cadpropr" method="post" action="">
+        <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
+        <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
+      </form>
+
+
+      <!-- SEGUNDA TABELA -->
+      <hr>
+      <h2>Dados leiteiro</h2>
+      
+      <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover table-condensed">
           <thead>
             <tr>
@@ -104,11 +119,16 @@
               <td><input type="text" name="txtsecad" placeholder="Data" class="form-control"></td>
             </tr>
             <tr>
-              <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
-              <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
+
             </tr>
-          <tbody>
-      </form>
+          </tbody>
+        </table>
+      </div>
+        <form name="cadpropr" method="post" action="">
+          <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
+          <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
+        </form>
+
       <?php
         // if(isset($_POST['cadastrar'])){
         //   include 'dao/tabelavacadao.class.php';

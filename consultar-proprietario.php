@@ -2,12 +2,12 @@
 session_start();
 ob_start();
 
-include_once 'dao/vacadao.class.php';
-include_once 'modelo/vaca.class.php';
+include_once 'dao/proprietariodao.class.php';
+include_once 'modelo/proprietario.class.php';
 include_once 'util/helper.class.php';
 
-$vacDAO = new VacaDAO();
-$array = $vacDAO->buscarVacas();
+$propDAO = new ProprietarioDAO();
+$array = $propDAO->buscarProprietario();
 //var_dump($array); //TESTAR...
 ?>
 <!DOCTYPE html>
@@ -50,16 +50,16 @@ $array = $vacDAO->buscarVacas();
             <a class="nav-link" href="tabela-vaca.php">Controle Vaca</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="consultar-vaca.php">Consultar Vacas<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário</a>
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário<span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
     </nav>
 
-    <h2>Consulta de Vacas!</h2>
+    <h2>Consulta de Proprietário!</h2>
 
     <?php
     if(isset($_SESSION['msg'])){
@@ -68,7 +68,7 @@ $array = $vacDAO->buscarVacas();
     }
 
     if(count($array) == 0){
-      echo "<h2 class='x'>Não há vacas cadastradas!</h2>";
+      echo "<h2 class='x'>Não há proprietários cadastrados!</h2>";
       return; //die();
     }
     ?>
@@ -81,11 +81,12 @@ $array = $vacDAO->buscarVacas();
         <select name="selfiltro" class="form-control">
           <option value="todos">Todos</option>
           <option value="codigo">Código</option>
+          <option value="login">login</option>
           <option value="nome">Nome</option>
-          <option value="ndeferro">N° de ferro</option>
-          <option value="raca">Raça</option>
-          <option value="pelagem">Pelagem</option>
-          <option value="idade">idade</option>
+          <option value="propriedade">Propriedade</option>
+          <option value="localizacao">Localização</option>
+          <option value="municipio">Município</option>
+          <option value="ncontato">N° de Contato</option>
         </select>
       </div>
       </div><!-- fecha row -->
@@ -98,10 +99,10 @@ $array = $vacDAO->buscarVacas();
       $pesquisa = $_POST['txtfiltro'];
       $filtro = $_POST['selfiltro'];
 
-      $array = $vacDAO->filtrar($pesquisa, $filtro);
+      $array = $propDAO->filtrar($pesquisa, $filtro);
 
       if(count($array)==0){
-        echo "<h2>Sua pesquisa não retornou nenhuma vaca(s)!</h2>";
+        echo "<h2>Sua pesquisa não retornou nenhum proprietário(s)!</h2>";
         return;
       }
     }
@@ -111,11 +112,12 @@ $array = $vacDAO->buscarVacas();
         <thead>
           <tr>
             <th>Código</th>
+            <th>login</th>
             <th>Nome</th>
-            <th>N° de ferro</th>
-            <th>Raça</th>
-            <th>Pelagem</th>
-            <th>Idade</th>
+            <th>Propriedade</th>
+            <th>Localização</th>
+            <th>Município</th>
+            <th>N° de Contato</th>
             <th>Alterar</th>
             <th>Excluir</th>
           </tr>
@@ -123,27 +125,29 @@ $array = $vacDAO->buscarVacas();
         <tfoot>
           <tr>
             <th>Código</th>
+            <th>login</th>
             <th>Nome</th>
-            <th>N° de ferro</th>
-            <th>Raça</th>
-            <th>Pelagem</th>
-            <th>Idade</th>
+            <th>Propriedade</th>
+            <th>Localização</th>
+            <th>Município</th>
+            <th>N° de Contato</th>
             <th>Alterar</th>
             <th>Excluir</th>
           </tr>
         </tfoot>
         <tbody>
           <?php
-          foreach($array as $v){ // é L de livro
+          foreach($array as $p){ // é L de livro
             echo "<tr>";
-              echo "<td>$v->idvaca</td>";
-              echo "<td>$v->nAnimal</td>";
-              echo "<td>$v->nDeFerro</td>";
-              echo "<td>$v->raca</td>";
-              echo "<td>$v->pelagem</td>";
-              echo "<td>$v->idade</td>";
-              echo "<td><a href='alterar-vaca.php?id=$v->idvaca' class='btn btn-warning'>Alterar</a></td>";
-              echo "<td><a href='consultar-vaca.php?id=$v->idvaca' class='btn btn-danger'>Excluir</a></td>";
+              echo "<td>$p->idProprietario</td>";
+              echo "<td>$p->login</td>";
+              echo "<td>$p->nome</td>";
+              echo "<td>$p->propriedade</td>";
+              echo "<td>$p->localizacao</td>";
+              echo "<td>$p->municipio</td>";
+              echo "<td>$p->nContato</td>";
+              echo "<td><a href='alterar-proprietario.php?id=$p->idProprietario' class='btn btn-warning'>Alterar</a></td>";
+              echo "<td><a href='consultar-proprietario.php?id=$p->idProprietario' class='btn btn-danger'>Excluir</a></td>";
             echo "</tr>";
           }
           ?>
@@ -153,9 +157,9 @@ $array = $vacDAO->buscarVacas();
   </div>
   <?php
   if(isset($_GET['id'])){
-    $vacDAO->deletarVaca($_GET['id']);
-    $_SESSION['msg'] = "Vaca excluído com sucesso!";
-    header("location:consultar-vaca.php");
+    $propDAO->deletarProprietario($_GET['id']);
+    $_SESSION['msg'] = "Proprietario excluído com sucesso!";
+    header("location:consultar-proprietario.php");
     unset($_GET['id']);
     ob_end_flush();
   }

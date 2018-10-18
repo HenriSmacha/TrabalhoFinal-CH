@@ -1,8 +1,6 @@
 <?php
 class Proprietario{
 
-  // private $login;
-  // private $password;
   private $idProprietario;
   private $nome;
   private $propriedade;
@@ -19,7 +17,7 @@ class Proprietario{
   public function __toString(){
     return nl2br("
                 Nome do proprietário: $this->nome
-                Nome da propreidade: $this->propriedade
+                Nome da propriedade: $this->propriedade
                 Localização: $this->localizacao
                 Município: $this->municipio
                 Contato: $this->nContato");

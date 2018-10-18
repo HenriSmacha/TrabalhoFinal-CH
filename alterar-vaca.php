@@ -2,11 +2,23 @@
 session_start();
 ob_start();
 include_once 'util/helper.class.php';
+
+if(isset($_GET['id'])){
+  include_once "dao/vacadao.class.php";
+  include_once "modelo/vaca.class.php";
+  $v = new vacaDAO();
+  $array = $v->filtrar($_GET['id'],"codigo");
+  //var_dump($array); //só teste
+  $v = $array[0];
+  //echo $v; //toString
+}else{
+  header("location:consultar-vaca.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <title>Cadastro de Proprietário</title>
+  <title>Edição de Vacas</title>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
   <link href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -16,7 +28,7 @@ include_once 'util/helper.class.php';
 </head>
   <body>
       <div class="container">
-        <h1 class="jumbotron bg-info">Cadastro de proprietário</h1>
+        <h1 class="jumbotron bg-info">Edição de Vacas</h1>
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <a class="navbar-brand" href="#">Sistema</a>
@@ -48,55 +60,57 @@ include_once 'util/helper.class.php';
           </div>
         </nav>
         <?php
-          echo isset($_SESSION['msg'])? Helper::alert($_SESSION['msg']) : "";
-          unset($_SESSION['msg']);
+        echo isset($_SESSION['msg']) ? Helper::alert($_SESSION['msg']) : "";
+        unset($_SESSION['msg']);
         ?>
-        <form name="cadpropr" method="post" action="">
+        <form name="cadvaca" method="post" action="">
           <div class="form-group">
-            <input type="text" name="txtnome" placeholder="Nome do proprietário" class="form-control">
+            <input type="text" name="txtnanimal" placeholder="Nome do animal" class="form-control" value="<?php if(isset($v)){ echo $v->nAnimal; } ?>">
           </div>
           <div class="form-group">
-            <input type="text" name="txtsobrenome" placeholder="Sobrenome do proprietário" class="form-control">
+            <input type="text" name="txtndeferro" placeholder="N° do ferro" class="form-control" value="<?php if(isset($v)){ echo $v->nDeFerro; } ?>">
           </div>
           <div class="form-group">
-            <input type="text" name="txtpropriedade" placeholder="Nome da propriedade" class="form-control">
+            <input type="text" name="txtraca" placeholder="Raça" class="form-control" value="<?php if(isset($v)){ echo $v->raca; } ?>">
           </div>
           <div class="form-group">
-            <input type="text" name="txtlocalizacao" placeholder="Localização" class="form-control">
+            <input type="text" name="txtpelagem" placeholder="Pelagem" class="form-control" value="<?php if(isset($v)){ echo $v->pelagem; } ?>">
           </div>
           <div class="form-group">
-            <input type="text" name="txtmunicipio" placeholder="Município" class="form-control">
+            <input type="number" name="txtidade" placeholder="Idade" class="form-control" value="<?php if(isset($v)){ echo $v->idade; } ?>">
           </div>
           <div class="form-group">
-            <input type="text" name="txtncontato" placeholder="N° de Contato" class="form-control">
-          </div>
-          <div class="form-group">
-            <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
+            <input type="submit" name="alterar" value="Alterar" class="btn btn-primary">
             <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
           </div>
         </form>
         <?php
-          if(isset($_POST['cadastrar'])){
-            include 'modelo/proprietario.class.php';
-            include 'dao/proprietariodao.class.php';
+          //falta código
+          if(isset($_POST['alterar'])){
+            include_once 'modelo/vaca.class.php';
+            include_once 'dao/vacadao.class.php';
             include 'util/padronizacao.class.php';
 
-            $prop = new Proprietario();
-            $prop->nome = Padronizacao::nomeSobrenome($_POST['txtnome'],$_POST['txtsobrenome']);
-            $prop->propriedade = $_POST['txtpropriedade'];
-            $prop->localizacao = $_POST['txtlocalizacao'];
-            $prop->municipio = $_POST['txtmunicipio'];
-            $prop->nContato = $_POST['txtncontato'];
+            $v = new Vaca();
+            $v->idVaca = $_GET['id'];
+            $v->nAnimal = Padronizacao::padronizarMaiMin($_POST['txtnanimal']);
+            $v->nDeFerro = $_POST['txtndeferro'];
+            $v->raca = Padronizacao::padronizarMaiMin($_POST['txtraca']);
+            $v->pelagem = Padronizacao::padronizarMaiMin($_POST['txtpelagem']);
+            $v->idade = $_POST['txtidade'];
 
-            $propDAO = new ProprietarioDAO();
-            $propDAO->cadastrarProprietario($prop);
+            $vacaDAO = new VacaDAO();
+            $vacaDAO->alterarVaca($v);
 
-            echo "<br>".$prop;
-            $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
+            $_SESSION['msg'] = "Vaca alterada com sucesso!";
+            header("location:consultar-vaca.php");
+
+            //echo "<h2>Livro cadastrado com sucesso!</h2>";
+            //Helper::alert("Livro cadastrado com sucesso!");
+            //echo $liv;
             ob_end_flush();
-            // header("location:cadastro-proprietario.php");
-         }
+          }
         ?>
-    </div>
+      </div>
   </body>
 </html>

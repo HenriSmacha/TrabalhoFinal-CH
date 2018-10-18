@@ -64,6 +64,25 @@ class VacaDAO{
      return $array;
   }//fecha filtrar
 
+  public function alterarVaca($v){
+      try{
+        $stat = $this->conexao->prepare("update vaca set nanimal=?, ndeferro=?, raca=?, pelagem=?, idade=? where idvaca=?");
+
+        $stat->bindValue(1, $v->nAnimal);
+        $stat->bindValue(2, $v->nDeFerro);
+        $stat->bindValue(3, $v->raca);
+        $stat->bindValue(4, $v->pelagem);
+        $stat->bindValue(5, $v->idade);
+        $stat->bindValue(6, $v->idVaca);
+
+        $stat->execute();
+
+      }catch(PDOException $e){
+        echo "Erro ao alterar vaca! ".$e;
+      }//fecha catch
+    }//fecha método alterar
+
+
   public function deletarVaca($id){
     try{
       $stat = $this->conexao->prepare("delete from vaca where idvaca = ?");

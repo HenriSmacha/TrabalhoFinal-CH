@@ -42,6 +42,83 @@
     </nav>
 
     <h2>Cadastro de Proprietários para administrar cruza e lactase de gado leiteiro!</h2>
+
+    <?php
+    echo isset($_SESSION['msg']) ? Helper::alert($_SESSION['msg']) : "";
+    unset($_SESSION['msg']);
+    ?>
+
+    <?php
+    if(!isset($_SESSION['privateUser'])){
+    ?>
+    <form name="login" method="post" action="">
+      <div class="form-group">
+        <input type="text" name="txtlogin" placeholder="Login" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <input type="password" name="txtsenha" placeholder="Senha" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <select name="seltipo" class="form-control">
+          <option value="adm">Adm</option>
+          <option value="visitante">Visitante</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="submit" name="entrar" value="Entrar" class="btn btn-primary btn-block">
+      </div>
+      <div class="form-group">
+        <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-success btn-block">
+      </div>
+
+    </form>
+    <?php
+    }else{
+      include_once 'modelo/user.class.php';
+
+      $u = unserialize($_SESSION['privateUser']);
+      echo "<h3>Olá ".$u->login.", seja bem vindo!</h3>";
+      ?>
+      <form name="deslogar" method="post" action="">
+        <div class="form-group">
+          <input type="submit" name="deslogar" value="Sair" class="btn btn-primary">
+        </div>
+      </form>
+    <?php
+      if(isset($_POST['deslogar'])){
+        unset($_SESSION['privateUser']);
+        header("location:index.php");
+      }
+    }
+    ?>
+
+    <?php
+    if(isset($_POST['entrar'])){
+      include_once 'modelo/user.class.php';
+      include_once 'dao/userdao.class.php';
+      include_once 'util/seguranca.class.php';
+
+      $u = new User();
+      $u->login = $_POST['txtlogin'];
+      $u->senha = Seguranca::criptografarMD5($_POST['txtsenha']);
+      $u->tipo = $_POST['seltipo'];
+
+      //echo $u;
+
+      $uDAO = new UsuarioDAO();
+      $usuario = $uDAO->verificarUsuario($u);
+
+      if($usuario == null){
+        echo "usuário/senha inválido!";
+      }else{
+        $_SESSION['privateUser'] = serialize($usuario);
+        header("location:index.php");
+        //echo $usuario;
+      }
+    }
+    ?>
   </div>
 </body>
 </html>

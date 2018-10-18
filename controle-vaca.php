@@ -34,12 +34,15 @@
           <li class="nav-item">
             <a class="nav-link" href="controle-vaca.php">Controle da Vaca<span class="sr-only">(current)</span></a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário</a>
+          </li>
         </ul>
       </div>
     </nav>
       <!-- // echo isset($_SESSION['msg'])? Helper::alert($_SESSION['msg']) : "";
       // unset($_SESSION['msg']); -->
-    <form name="cadpropr" method="post" action="">
+
       <h2>Dados reprodutivos</h2>
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover table-condensed">
@@ -68,11 +71,13 @@
               <td><input type="text" name="txtnome" placeholder="int. de pasrto(dias)" class="form-control"></td>
             </tr>
             <tr>
-              <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
-              <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
+
             </tr>
           <tbody>
         </div>
+        <form name="cadpropr" method="post" action="">
+          <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
+          <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
       </form>
     <h2>Dados leiteiro</h2>
   </div>
