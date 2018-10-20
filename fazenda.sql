@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 18-Out-2018 às 23:07
+-- Generation Time: 21-Out-2018 às 01:22
 -- Versão do servidor: 10.1.36-MariaDB
 -- versão do PHP: 7.2.10
 
@@ -47,6 +47,38 @@ INSERT INTO `proprietario` (`idProprietario`, `nome`, `propriedade`, `localizaca
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `tabelavaca`
+--
+
+CREATE TABLE `tabelavaca` (
+  `idControle` bigint(20) NOT NULL,
+  `cio` datetime NOT NULL,
+  `cobIns` datetime NOT NULL,
+  `diagDia` date NOT NULL,
+  `diagResul` varchar(50) NOT NULL,
+  `pariDia` date NOT NULL,
+  `pariSex` varchar(50) NOT NULL,
+  `pariTouro` varchar(50) NOT NULL,
+  `pariDTotal` int(11) NOT NULL,
+  `controle` date NOT NULL,
+  `meses` varchar(150) NOT NULL,
+  `secagem` date NOT NULL,
+  `lactacao` int(11) NOT NULL,
+  `prodT` float NOT NULL,
+  `prodD` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `tabelavaca`
+--
+
+INSERT INTO `tabelavaca` (`idControle`, `cio`, `cobIns`, `diagDia`, `diagResul`, `pariDia`, `pariSex`, `pariTouro`, `pariDTotal`, `controle`, `meses`, `secagem`, `lactacao`, `prodT`, `prodD`) VALUES
+(9, '2018-10-24 06:06:00', '2018-10-31 06:06:00', '2018-10-23', 'asdasd', '2018-10-23', 'asd', 'asd', 123, '2018-10-09', '1 2 2 2 3 3 3 1 1 2 2 1', '1999-02-12', 0, 0, 0),
+(10, '2018-10-05 22:22:00', '2018-10-02 03:03:00', '2018-10-11', 'qwe', '2018-10-03', 'qwe', 'qwe', 123, '2005-04-22', '57 0 0 113 334 243 195 145 151 156 162 111', '2006-01-16', 264, 1667, 138.917);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `user`
 --
 
@@ -84,7 +116,8 @@ CREATE TABLE `vaca` (
 --
 
 INSERT INTO `vaca` (`idVaca`, `nAnimal`, `nDeFerro`, `raca`, `pelagem`, `idade`) VALUES
-(1, 'a', 1, 'a', 'a', 1);
+(9, 'io', 123, 'qwe', 'l', 132),
+(10, 'mimozinha', 65, 'zebra', 'listrada', 65);
 
 --
 -- Indexes for dumped tables
@@ -95,6 +128,12 @@ INSERT INTO `vaca` (`idVaca`, `nAnimal`, `nDeFerro`, `raca`, `pelagem`, `idade`)
 --
 ALTER TABLE `proprietario`
   ADD PRIMARY KEY (`idProprietario`);
+
+--
+-- Indexes for table `tabelavaca`
+--
+ALTER TABLE `tabelavaca`
+  ADD PRIMARY KEY (`idControle`);
 
 --
 -- Indexes for table `user`
@@ -128,7 +167,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `vaca`
 --
 ALTER TABLE `vaca`
-  MODIFY `idVaca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idVaca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

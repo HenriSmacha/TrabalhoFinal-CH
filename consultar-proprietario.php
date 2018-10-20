@@ -5,7 +5,25 @@ ob_start();
 include_once 'dao/proprietariodao.class.php';
 include_once 'modelo/proprietario.class.php';
 include_once 'util/helper.class.php';
-
+//
+// if(isset($_SESSION['privateUser'])){
+//   include_once 'modelo/user.class.php';
+//
+//   $user = unserialize($_SESSION['privateUser']);
+//   if($user->tipo == 'visitante'){
+//     $_SESSION['msg'] = "Acesso exclusivo ao administrador!";
+//     header("location:index.php");
+//     return;
+//   }else if($user->tipo == 'adm'){
+//     $_SESSION['msg'] = "Acesso exclusivo ao administrador!";
+//     header("location:index.php");
+//     return;{
+//   }
+// }
+// $_SESSION['msg'] = "Você precisa estar logado para acessar este conteúdo";
+// header("location:index.php");
+// return;
+//
 $propDAO = new ProprietarioDAO();
 $array = $propDAO->buscarProprietario();
 //var_dump($array); //TESTAR...
@@ -20,11 +38,6 @@ $array = $propDAO->buscarProprietario();
   <script src="vendor/components/jquery/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"></script>
   <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-  <style>
-    .x{
-      font-size: 50px;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -47,13 +60,13 @@ $array = $propDAO->buscarProprietario();
             <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="tabela-vaca.php">Controle Vaca</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="constabela-vaca.php">Controle Vaca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários<span class="sr-only">(current)</span></a>
           </li>
         </ul>
       </div>
@@ -62,15 +75,15 @@ $array = $propDAO->buscarProprietario();
     <h2>Consulta de Proprietário!</h2>
 
     <?php
-    if(isset($_SESSION['msg'])){
-        Helper::alert($_SESSION['msg']);
-        unset($_SESSION['msg']);
-    }
-
-    if(count($array) == 0){
-      echo "<h2 class='x'>Não há proprietários cadastrados!</h2>";
-      return; //die();
-    }
+    // if(isset($_SESSION['msg'])){
+    //     Helper::alert($_SESSION['msg']);
+    //     unset($_SESSION['msg']);
+    // }
+    //
+    // if(count($array) == 0){
+    //   echo "<h2 class='x'>Não há proprietários cadastrados!</h2>";
+    //   return; //die();
+    // }
     ?>
     <form name="formfiltro" method="post" action="">
       <div class="row">
@@ -154,7 +167,6 @@ $array = $propDAO->buscarProprietario();
         </tbody>
       </table>
     </div><!-- table-responsive -->
-  </div>
   <?php
   if(isset($_GET['id'])){
     $propDAO->deletarProprietario($_GET['id']);
@@ -164,5 +176,5 @@ $array = $propDAO->buscarProprietario();
     ob_end_flush();
   }
   ?>
-</body>
+  </body>
 </html>

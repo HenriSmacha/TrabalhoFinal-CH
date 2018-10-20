@@ -30,19 +30,19 @@ include_once 'util/helper.class.php';
                 <a class="nav-link" href="index.php">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="cadastro-proprietario.php">Cad. Proprietário <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Proprietário <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="tabela-vaca.php">Controle de Vaca</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário</a>
+                <a class="nav-link" href="constabela-vaca.php">Controle de Vaca</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
               </li>
             </ul>
           </div>

@@ -1,4 +1,17 @@
-<?php session_start(); ob_start();?>
+<?php
+session_start();
+ob_start();
+
+include_once 'dao/vacadao.class.php';
+include_once 'modelo/vaca.class.php';
+include_once 'util/helper.class.php';
+
+$vacDAO = new VacaDAO();
+unserialize($_GET['idVaca']);
+// echo $_GET['idVaca'];
+$array = $vacDAO->filtrar($_GET['idVaca'],'codigo');
+//var_dump($array); //TESTAR...
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -32,124 +45,161 @@
             <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="tabela-vaca.php">Controle da Vaca<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário</a>
+            <a class="nav-link" href="constabela-vaca.php">Controle da Vaca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
           </li>
         </ul>
       </div>
     </nav>
-      <!-- // echo isset($_SESSION['msg'])? Helper::alert($_SESSION['msg']) : "";
-      // unset($_SESSION['msg']); -->
-
-      <!-- PRIMEIRA TABELA -->
-
-      <h2>Dados reprodutivos</h2>
+    <?php
+    echo isset($_SESSION['msg'])? Helper::alert($_SESSION['msg']) : "";
+    unset($_SESSION['msg']);
+    ?>
+      <div class="row">
       <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover table-condensed">
+        <table class="table table-striped table-bordered table-hover table-condensed">
           <thead>
             <tr>
-              <th colspan="2">Cio</th>
-              <th colspan="2">Cobertura/Inseminação</th>
-              <th colspan="2">Diag. gestação</th>
-              <th colspan="5">Parição</th>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>N° de ferro</th>
+              <th>Raça</th>
+              <th>Pelagem</th>
+              <th>Idade</th>
             </tr>
           </thead>
+          <tfoot>
+            <tr>
+              <th>Código</th>
+              <th>Nome</th>
+              <th>N° de ferro</th>
+              <th>Raça</th>
+              <th>Pelagem</th>
+              <th>Idade</th>
+            </tr>
+          </tfoot>
           <tbody>
-            <tr>
-              <td><input type="text" name="txtciod" placeholder="Data" class="form-control"></td>
-              <td><input type="text" name="txtcioh" placeholder="Hora" class="form-control"></td>
-              <td><input type="text" name="txtcoind" placeholder="Data" class="form-control"></td>
-              <td><input type="text" name="txtcoinh" placeholder="Hora" class="form-control"></td>
-              <td><input type="text" name="txtdiagd" placeholder="Data" class="form-control"></td>
-              <td><input type="text" name="txtdiagr" placeholder="Resultado" class="form-control"></td>
-              <td><input type="text" name="txtparid" placeholder="Data" class="form-control"></td>
-              <td><input type="text" name="txtparis" placeholder="Sexo" class="form-control"></td>
-              <td><input type="text" name="txtparin" placeholder="N°" class="form-control"></td>
-              <td><input type="text" name="txtparit" placeholder="Touro" class="form-control"></td>
-              <td><input type="text" name="txtparids" placeholder="int. de pasrto(dias)" class="form-control"></td>
-            </tr>
-            <tr>
-            </tr>
-
+            <?php
+            foreach($array as $v){ // é L de livro
+              echo "<tr>";
+                echo "<td>$v->idVaca</td>";
+                echo "<td>$v->nAnimal</td>";
+                echo "<td>$v->nDeFerro</td>";
+                echo "<td>$v->raca</td>";
+                echo "<td>$v->pelagem</td>";
+                echo "<td>$v->idade</td>";
+              echo "</tr>";
+            }
+            ?>
           </tbody>
         </table>
-      </div>
-
-      <form name="cadpropr" method="post" action="">
-        <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
-        <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
-      </form>
-
-
-      <!-- SEGUNDA TABELA -->
-      <hr>
-      <h2>Dados leiteiro</h2>
-      
-      <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover table-condensed">
-          <thead>
-            <tr>
-              <th colspan="1">Data do parto</th>
-              <th colspan="1">Data início controle</th>
-              <th colspan="12">Litros/Mês</th>
-              <th colspan="1">Data secagem</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="text" name="txtpartod" placeholder="Data" class="form-control"></td>
-              <td><input type="text" name="txtcontd" placeholder="Data" class="form-control"></td>
-              <td><input type="text" name="txtjan" placeholder="Jan" class="form-control"></td>
-              <td><input type="text" name="txtfev" placeholder="Fev" class="form-control"></td>
-              <td><input type="text" name="txtmar" placeholder="Mar" class="form-control"></td>
-              <td><input type="text" name="txtabr" placeholder="Abr" class="form-control"></td>
-              <td><input type="text" name="txtmai" placeholder="Mai" class="form-control"></td>
-              <td><input type="text" name="txtjun" placeholder="Jun" class="form-control"></td>
-              <td><input type="text" name="txtjul" placeholder="Jul" class="form-control"></td>
-              <td><input type="text" name="txtago" placeholder="Ago" class="form-control"></td>
-              <td><input type="text" name="txtset" placeholder="Set" class="form-control"></td>
-              <td><input type="text" name="txtout" placeholder="Out" class="form-control"></td>
-              <td><input type="text" name="txtnov" placeholder="Nov" class="form-control"></td>
-              <td><input type="text" name="txtdez" placeholder="Dez" class="form-control"></td>
-              <td><input type="text" name="txtsecad" placeholder="Data" class="form-control"></td>
-            </tr>
-            <tr>
-
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </div><!-- table-responsive -->
+    </div>
+        <!-- PRIMEIRA TABELA -->
+        <h2>Dados reprodutivos</h2>
+      <div class="row">
         <form name="cadpropr" method="post" action="">
+          <h5>Cio</h5>
+          <div class="form-group">
+            <input type="date" name="txtciodia" class="form-control">
+            <input type="time" name="txtciohora" class="form-control">
+        </div>
+          <h5>Cobertura/Inseminação</h5>
+          <div class="form-group">
+            <input type="date" name="txtcoindia" class="form-control">
+            <input type="time" name="txtcoinhora" class="form-control">
+          </div>
+          <h5>Diag. gestação</h5>
+          <div class="form-group">
+            <input type="date" name="txtdiagdia" class="form-control">
+            <input type="text" name="txtdiagresul" placeholder="Positivo/Negativo" class="form-control">
+          </div>
+          <h5>Data prov. do parto</h5>
+          <div class="form-group">
+            <input type="date" name="txtprovalD" placeholder="Dia" class="form-control">
+          </div>
+          <h5>Parição</h5>
+          <div class="form-group">
+            <input type="date" name="txtparidia" placeholder="Dia" class="form-control">
+            <input type="text" name="txtparisex" placeholder="Sexo" class="form-control">
+            <input type="text" name="txtparinferro" placeholder="N° de ferro" class="form-control">
+            <input type="text" name="txtparitouro" placeholder="Touro" class="form-control">
+            <input type="text" name="txtparidtotal" placeholder="Total dias em gestação" class="form-control">
+          </div>
+      <!-- SEGUNDA TABELA -->
+        <h2>Dados reprodutivos</h2>
+        <h5>Início do controle</h5>
+        <div class="form-group">
+          <input type="date" name="txtcontr" placeholder="Data" class="form-control">
+        </div>
+        <h5>Litos/Mes</h5>
+        <div class="form-group">
+          <input type="text" name="jan" placeholder="Jan" class="form-control">
+          <input type="text" name="fev" placeholder="Fev" class="form-control">
+          <input type="text" name="mar" placeholder="Mar" class="form-control">
+          <input type="text" name="abr" placeholder="Abr" class="form-control">
+          <input type="text" name="mai" placeholder="Mai" class="form-control">
+          <input type="text" name="jun" placeholder="Jun" class="form-control">
+          <input type="text" name="jul" placeholder="Jul" class="form-control">
+          <input type="text" name="ago" placeholder="Ago" class="form-control">
+          <input type="text" name="set" placeholder="Set" class="form-control">
+          <input type="text" name="out" placeholder="Out" class="form-control">
+          <input type="text" name="nov" placeholder="Nov" class="form-control">
+          <input type="text" name="dez" placeholder="Dez" class="form-control">
+        </div>
+        <h5>Data de secagem</h5>
+        <div class="form-group">
+          <input type="date" name="txtsecag" placeholder="Data" class="form-control">
+        </div>
+        <div class="form-group">
           <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
           <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
-        </form>
+        </div>
+      </form>
+    </div>
+        <?php
+          if(isset($_POST['cadastrar'])){
+            include 'dao/tabelavacadao.class.php';
+            include 'modelo/tabelavaca.class.php';
+            include 'util/padronizacao.class.php';
+            include 'util/calculos.class.php';
 
-      <?php
-        // if(isset($_POST['cadastrar'])){
-        //   include 'dao/tabelavacadao.class.php';
-        //   include 'modelo/tabelavaca.class.php';
-        //
-        //   $contV=new TabelaVacaDAO();
-        //   $contV->$cioD = $_POST['txt'];
-        //   $contV->$cioH = $_POST['txt'];
-        //   $contV->$cobInsD = $_POST['txt'];
-        //   $contV->$cobInsH = $_POST[''];
-        //   $contV->$diagD = $_POST[''];
-        //   $contV->$diagR = $_POST[''];
-        //   $contV->$pariD = $_POST[''];
-        //   $contV->$pariS = $_POST[''];
-        //   $contV->$pariT = $_POST[''];
-        //   $contV->$pariI = $_POST[''];
-        //   $contV->$controle = $_POST[''];
-        //   $contV->$meses = $_POST[''];
-        //   $contV->$secagem = $_POST[''];
-        // }
-      ?>
+            $cvaca=new TabelaVaca();
+            $cvaca->idControle = $_GET['idVaca'];
+            $cvaca->cio = padronizacao::dataHora($_POST['txtciodia'],$_POST['txtciohora']);
+            $cvaca->cobIns = padronizacao::dataHora($_POST['txtcoindia'],$_POST['txtcoinhora']);
+            $cvaca->diagDia = $_POST['txtdiagdia'];
+            $cvaca->diagResul = $_POST['txtdiagresul'];
+            $cvaca->provavelD = $_POST['txtprovalD'];
+            $cvaca->pariDia = $_POST['txtparidia'];
+            $cvaca->pariSex = $_POST['txtparisex'];
+            $cvaca->pariNun = $_POST['txtparinferro'];
+            $cvaca->pariTouro = $_POST['txtparitouro'];
+            $cvaca->pariDTotal = $_POST['txtparidtotal'];
+            $cvaca->controle = $_POST['txtcontr'];
+            $cvaca->meses = Padronizacao::arrayMeses($_POST['jan'],$_POST['fev'],$_POST['mar'],$_POST['abr'],$_POST['mai'],$_POST['jun'],$_POST['jul'],$_POST['ago'],$_POST['set'],$_POST['out'],$_POST['nov'],
+            $_POST['dez']);
+            $cvaca->secagem = $_POST['txtsecag'];
+            $cvaca->lactacao = Calculos::lactacaoDias($_POST['txtsecag'],$_POST['txtcontr']);
+            $cvaca->prodT = Calculos::prodTotal($_POST['jan'],$_POST['fev'],$_POST['mar'],$_POST['abr'],$_POST['mai'],$_POST['jun'],$_POST['jul'],$_POST['ago'],$_POST['set'],$_POST['out'],$_POST['nov'],
+            $_POST['dez']);
+            $cvaca->prodD = Calculos::prodDia($_POST['jan'],$_POST['fev'],$_POST['mar'],$_POST['abr'],$_POST['mai'],$_POST['jun'],$_POST['jul'],$_POST['ago'],$_POST['set'],$_POST['out'],$_POST['nov'],
+            $_POST['dez']);
+
+            $cvacaDAO=new TabelaVacaDAO();
+            $cvacaDAO->cadastrarContrVac($cvaca);
+
+            $_SESSION['msg'] = "Tabela cadastrada!";
+            echo "<br>".$cvaca;
+            ob_end_flush();
+            // header("location:index.php");
+          }
+        ?>
     </div>
   </body>
 </html>

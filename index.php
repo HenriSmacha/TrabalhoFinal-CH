@@ -1,4 +1,7 @@
-<?php session_start(); ob_start();?>
+<?php session_start();
+ob_start();
+include_once 'util/helper.class.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -32,10 +35,13 @@
             <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="tabela-vaca.php">Controle Vaca</a>
+            <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
+            <a class="nav-link" href="constabela-vaca.php">Controle Vaca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</span></a>
           </li>
         </ul>
       </div>
@@ -72,7 +78,11 @@
       <div class="form-group">
         <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-success btn-block">
       </div>
-
+      <?php
+      if(isset($_POST['cadastrar'])){
+        header("location:cadastro-proprietario.php");
+      }
+      ?>
     </form>
     <?php
     }else{
@@ -93,7 +103,6 @@
       }
     }
     ?>
-
     <?php
     if(isset($_POST['entrar'])){
       include_once 'modelo/user.class.php';

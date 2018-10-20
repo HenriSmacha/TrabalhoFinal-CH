@@ -47,13 +47,13 @@ $array = $vacDAO->buscarVacas();
             <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="tabela-vaca.php">Controle Vaca</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietário</a>
+            <a class="nav-link" href="constabela-vaca.php">Controle Vaca</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
           </li>
         </ul>
       </div>
@@ -116,8 +116,8 @@ $array = $vacDAO->buscarVacas();
             <th>Raça</th>
             <th>Pelagem</th>
             <th>Idade</th>
-            <th>Alterar</th>
-            <th>Excluir</th>
+            <th>Consultar Tabela</th>
+            <th>Criar/Alterar Tabela</th>
           </tr>
         </thead>
         <tfoot>
@@ -128,8 +128,8 @@ $array = $vacDAO->buscarVacas();
             <th>Raça</th>
             <th>Pelagem</th>
             <th>Idade</th>
-            <th>Alterar</th>
-            <th>Excluir</th>
+            <th>Consultar Tabela</th>
+            <th>Criar/Alterar Tabela</th>
           </tr>
         </tfoot>
         <tbody>
@@ -142,8 +142,8 @@ $array = $vacDAO->buscarVacas();
               echo "<td>$v->raca</td>";
               echo "<td>$v->pelagem</td>";
               echo "<td>$v->idade</td>";
-              echo "<td><a href='alterar-vaca.php?id=$v->idVaca' class='btn btn-warning'>Alterar</a></td>";
-              echo "<td><a href='consultar-vaca.php?id=$v->idVaca' class='btn btn-danger'>Excluir</a></td>";
+              echo "<td><a href='constabela-vaca.php?id=$v->idVaca' class='btn btn-warning'>Consultar</a></td>";
+              echo "<td><a href='consultar-vaca.php?id=$v->idVaca' class='btn btn-success'>Criar/Alterar</a></td>";
             echo "</tr>";
           }
           ?>
@@ -153,10 +153,10 @@ $array = $vacDAO->buscarVacas();
   </div>
   <?php
   if(isset($_GET['id'])){
-    $vacDAO->deletarVaca($_GET['id']);
-    $_SESSION['msg'] = "Vaca excluído com sucesso!";
-    header("location:consultar-vaca.php");
-    unset($_GET['id']);
+    // $vacDAO->deletarVaca($_GET['id']);
+    // $_SESSION['msg'] = "Vaca excluído com sucesso!";
+    // $_GET['id'];
+    header("location:tabela-vaca.php?idVaca={$_GET['id']}");
     ob_end_flush();
   }
   ?>
