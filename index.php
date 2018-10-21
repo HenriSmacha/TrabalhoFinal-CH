@@ -38,9 +38,6 @@ include_once 'util/helper.class.php';
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="constabela-vaca.php">Controle Vaca</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</span></a>
           </li>
         </ul>
@@ -116,7 +113,7 @@ include_once 'util/helper.class.php';
 
       //echo $u;
 
-      $userDAO = new UsuarioDAO();
+      $userDAO = new UserDAO();
       $usuario = $userDAO->verificarUsuario($user);
 
       if($usuario == null){

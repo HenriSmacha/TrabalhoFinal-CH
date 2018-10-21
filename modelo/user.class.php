@@ -18,7 +18,7 @@ class User {
 
   /*
   senha: mimozinha
-  insert into usuario(idusuario,login,senha,tipo)
-  values(01,"mimozinha","996d836b15da4dd9f945a802a77de03c", "adm")
+  insert into user(idusuario,login,senha,tipo,nivel)
+  values(1,"mimozinha","996d836b15da4dd9f945a802a77de03c", "adm",1)
   */
 }//fecha classe

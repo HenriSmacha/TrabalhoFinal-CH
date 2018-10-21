@@ -20,11 +20,6 @@ $array = $vacDAO->buscarVacas();
   <script src="vendor/components/jquery/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.3/js/tether.min.js"></script>
   <script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
-  <style>
-    .x{
-      font-size: 50px;
-    }
-  </style>
 </head>
 <body>
   <div class="container">
@@ -48,9 +43,6 @@ $array = $vacDAO->buscarVacas();
           </li>
           <li class="nav-item">
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="constabela-vaca.php">Controle Vaca</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
@@ -143,7 +135,7 @@ $array = $vacDAO->buscarVacas();
               echo "<td>$v->pelagem</td>";
               echo "<td>$v->idade</td>";
               echo "<td><a href='constabela-vaca.php?id=$v->idVaca' class='btn btn-warning'>Consultar</a></td>";
-              echo "<td><a href='consultar-vaca.php?id=$v->idVaca' class='btn btn-success'>Criar/Alterar</a></td>";
+              echo "<td><a href='tabela-vaca.php?id=$v->idVaca' class='btn btn-success'>Criar/Alterar</a></td>";
             echo "</tr>";
           }
           ?>
@@ -151,14 +143,5 @@ $array = $vacDAO->buscarVacas();
       </table>
     </div><!-- table-responsive -->
   </div>
-  <?php
-  if(isset($_GET['id'])){
-    // $vacDAO->deletarVaca($_GET['id']);
-    // $_SESSION['msg'] = "Vaca excluído com sucesso!";
-    // $_GET['id'];
-    header("location:tabela-vaca.php?idVaca={$_GET['id']}");
-    ob_end_flush();
-  }
-  ?>
 </body>
 </html>

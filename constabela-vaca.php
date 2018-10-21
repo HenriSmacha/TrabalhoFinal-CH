@@ -144,6 +144,8 @@ $arrayT = $tabDAO->filtrar($_GET['id'],'codigo');
                 echo "<td>$t->prodD</td>";
               echo "</tr>";
             }
+            unset($_GET['idVaca']);
+            ob_end_flush();
             ?>
           </tbody>
         </table>
@@ -159,7 +161,7 @@ $arrayT = $tabDAO->filtrar($_GET['id'],'codigo');
       $vacaDAO->deletarVaca($_GET['id']);
       $tabelaDAO->deletarTabela($_GET['id']);
       $_SESSION['msg'] = "Tabela excluído com sucesso!";
-      header("location:index.php");
+      header("location:cadastro-vaca.php");
       unset($_GET['excluir']);
       ob_end_flush();
     }

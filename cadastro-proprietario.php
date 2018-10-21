@@ -39,9 +39,6 @@ include_once 'util/helper.class.php';
                 <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="constabela-vaca.php">Controle de Vaca</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
               </li>
             </ul>
@@ -71,6 +68,12 @@ include_once 'util/helper.class.php';
             <input type="text" name="txtncontato" placeholder="N° de Contato" class="form-control">
           </div>
           <div class="form-group">
+            <input type="text" name="txtlogin" placeholder="Insira seu login" class="form-control">
+          </div>
+          <div class="form-group">
+            <input type="text" name="txtsenha" placeholder="Insira sua senha" class="form-control">
+          </div>
+          <div class="form-group">
             <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
             <input type="reset" name="Limpar" value="Limpar" class="btn btn-danger">
           </div>
@@ -80,6 +83,17 @@ include_once 'util/helper.class.php';
             include 'modelo/proprietario.class.php';
             include 'dao/proprietariodao.class.php';
             include 'util/padronizacao.class.php';
+            include 'util/seguranca.class.php';
+            include 'modelo/user.class.php';
+            include 'dao/userdao.class.php';
+
+            $user = new User();
+            $user->login = $_POST['txtlogin'];
+            $user->senha = Seguranca::criptografarMD5($_POST['txtsenha']);
+            $user->tipo = "visitante";
+
+            $userDAO = new UserDAO();
+            $userDAO->cadastrarUser($user);
 
             $prop = new Proprietario();
             $prop->nome = Padronizacao::nomeSobrenome($_POST['txtnome'],$_POST['txtsobrenome']);
@@ -92,8 +106,8 @@ include_once 'util/helper.class.php';
             $propDAO->cadastrarProprietario($prop);
 
             echo "<br>".$prop;
-            $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
-            ob_end_flush();
+            // $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
+            // ob_end_flush();
             // header("location:cadastro-proprietario.php");
          }
         ?>

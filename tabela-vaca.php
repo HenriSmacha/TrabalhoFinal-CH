@@ -7,9 +7,9 @@ include_once 'modelo/vaca.class.php';
 include_once 'util/helper.class.php';
 
 $vacDAO = new VacaDAO();
-unserialize($_GET['idVaca']);
+unserialize($_GET['id']);
 // echo $_GET['idVaca'];
-$array = $vacDAO->filtrar($_GET['idVaca'],'codigo');
+$array = $vacDAO->filtrar($_GET['id'],'codigo');
 //var_dump($array); //TESTAR...
 ?>
 <!DOCTYPE html>
@@ -46,9 +46,6 @@ $array = $vacDAO->filtrar($_GET['idVaca'],'codigo');
           </li>
           <li class="nav-item">
             <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="constabela-vaca.php">Controle da Vaca</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
@@ -129,7 +126,6 @@ $array = $vacDAO->filtrar($_GET['idVaca'],'codigo');
             <input type="text" name="txtparisex" placeholder="Sexo" class="form-control">
             <input type="text" name="txtparinferro" placeholder="N° de ferro" class="form-control">
             <input type="text" name="txtparitouro" placeholder="Touro" class="form-control">
-            <input type="text" name="txtparidtotal" placeholder="Total dias em gestação" class="form-control">
           </div>
       <!-- SEGUNDA TABELA -->
         <h2>Dados reprodutivos</h2>
@@ -180,7 +176,7 @@ $array = $vacDAO->filtrar($_GET['idVaca'],'codigo');
             $cvaca->pariSex = $_POST['txtparisex'];
             $cvaca->pariNun = $_POST['txtparinferro'];
             $cvaca->pariTouro = $_POST['txtparitouro'];
-            $cvaca->pariDTotal = $_POST['txtparidtotal'];
+            $cvaca->pariDTotal = Calculos::lactacaoDias($_POST['txtparidia'],$_POST['txtdiagdia']);
             $cvaca->controle = $_POST['txtcontr'];
             $cvaca->meses = Padronizacao::arrayMeses($_POST['jan'],$_POST['fev'],$_POST['mar'],$_POST['abr'],$_POST['mai'],$_POST['jun'],$_POST['jul'],$_POST['ago'],$_POST['set'],$_POST['out'],$_POST['nov'],
             $_POST['dez']);
@@ -195,9 +191,9 @@ $array = $vacDAO->filtrar($_GET['idVaca'],'codigo');
             $cvacaDAO->cadastrarContrVac($cvaca);
 
             $_SESSION['msg'] = "Tabela cadastrada!";
-            echo "<br>".$cvaca;
+            unset($_GET['id']);
             ob_end_flush();
-            // header("location:index.php");
+            header("location:consultar-vaca.php");
           }
         ?>
     </div>

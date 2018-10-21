@@ -1,5 +1,5 @@
 <?php
-require 'conexaobanco.class.php';
+require_once 'conexaobanco.class.php';
 class ProprietarioDAO{
 
   private $conexao = null;
