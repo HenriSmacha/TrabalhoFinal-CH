@@ -62,19 +62,19 @@ if(isset($_GET['id'])){
         ?>
         <form name="cadvaca" method="post" action="">
           <div class="form-group">
-            <input type="text" name="txtnome" placeholder="Nome do Proprietário" class="form-control" value="<?php if(isset($p)){ echo $p->nome; } ?>">
+            <input type="text" name="txtnome" placeholder="Nome do Proprietário" class="form-control" value="<?php if(isset($p)){ echo $p->nome; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtpropriedade" placeholder="Nome da propriedade" class="form-control" value="<?php if(isset($p)){ echo $p->propriedade; } ?>">
+            <input type="text" name="txtpropriedade" placeholder="Nome da propriedade" class="form-control" value="<?php if(isset($p)){ echo $p->propriedade; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtlocalizacao" placeholder="Localização" class="form-control" value="<?php if(isset($p)){ echo $p->localizacao; } ?>">
+            <input type="text" name="txtlocalizacao" placeholder="Localização" class="form-control" value="<?php if(isset($p)){ echo $p->localizacao; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtmunicipio" placeholder="Município" class="form-control" value="<?php if(isset($p)){ echo $p->municipio; } ?>">
+            <input type="text" name="txtmunicipio" placeholder="Município" class="form-control" value="<?php if(isset($p)){ echo $p->municipio; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtcontato" placeholder="N° de contato" class="form-control" value="<?php if(isset($p)){ echo $p->nContato; } ?>">
+            <input type="text" name="txtcontato" placeholder="N° de contato" class="form-control" value="<?php if(isset($p)){ echo $p->nContato; } ?>" pattern="^[0-9]{8,15}$">
           </div>
           <div class="form-group">
             <input type="submit" name="alterar" value="Alterar" class="btn btn-primary">
@@ -87,14 +87,15 @@ if(isset($_GET['id'])){
             include_once 'modelo/proprietario.class.php';
             include_once 'dao/proprietariodao.class.php';
             include 'util/padronizacao.class.php';
+            include 'util/seguranca.class.php';
+            include 'util/validacao.class.php';
 
-            $p = new Proprietario();
-            $p->idProprietario = $_GET['id'];
-            $p->nome = Padronizacao::padronizarMaiMin($_POST['txtnome']);
-            $p->propriedade = Padronizacao::padronizarMaiMin($_POST['txtpropriedade']);
-            $p->localizacao = Padronizacao::padronizarMaiMin($_POST['txtlocalizacao']);
-            $p->municipio = Padronizacao::padronizarMaiMin($_POST['txtmunicipio']);
-            $p->nContato = $_POST['txtcontato'];
+            $prop = new Proprietario();
+            $prop->nome = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase($_POST['txtnome'],$_POST['txtsobrenome'])));
+            $prop->propriedade = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtpropriedade'])));
+            $prop->localizacao = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtlocalizacao'])));
+            $prop->municipio = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtmunicipio'])));
+            $prop->nContato = Padronizacao::validarNumTelefone(Validacao::validarNumTelefone($_POST['txtncontato']));
 
             $propDAO = new ProprietarioDAO();
             $propDAO->alterarProp($p);

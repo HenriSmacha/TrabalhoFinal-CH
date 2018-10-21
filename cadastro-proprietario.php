@@ -50,28 +50,28 @@ include_once 'util/helper.class.php';
         ?>
         <form name="cadpropr" method="post" action="">
           <div class="form-group">
-            <input type="text" name="txtnome" placeholder="Nome do proprietário" class="form-control">
+            <input type="text" name="txtnome" placeholder="Nome do proprietário" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtsobrenome" placeholder="Sobrenome do proprietário" class="form-control">
+            <input type="text" name="txtsobrenome" placeholder="Sobrenome do proprietário" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtpropriedade" placeholder="Nome da propriedade" class="form-control">
+            <input type="text" name="txtpropriedade" placeholder="Nome da propriedade" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtlocalizacao" placeholder="Localização" class="form-control">
+            <input type="text" name="txtlocalizacao" placeholder="Localização" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtmunicipio" placeholder="Município" class="form-control">
+            <input type="text" name="txtmunicipio" placeholder="Município" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtncontato" placeholder="N° de Contato" class="form-control">
+            <input type="text" name="txtncontato" placeholder="N° de Contato" class="form-control" pattern="^[0-9]{8,15}$">
           </div>
           <div class="form-group">
             <input type="text" name="txtlogin" placeholder="Insira seu login" class="form-control">
           </div>
           <div class="form-group">
-            <input type="text" name="txtsenha" placeholder="Insira sua senha" class="form-control">
+            <input type="password" name="txtsenha" placeholder="Insira sua senha" class="form-control">
           </div>
           <div class="form-group">
             <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
@@ -84,23 +84,24 @@ include_once 'util/helper.class.php';
             include 'dao/proprietariodao.class.php';
             include 'util/padronizacao.class.php';
             include 'util/seguranca.class.php';
+            include 'util/validacao.class.php';
             include 'modelo/user.class.php';
             include 'dao/userdao.class.php';
 
             $user = new User();
-            $user->login = $_POST['txtlogin'];
-            $user->senha = Seguranca::criptografarMD5($_POST['txtsenha']);
+            $user->login = Seguranca::anttiEspSQLInjection($_POST['txtlogin']);
+            $user->senha = Seguranca::anttiEspSQLInjection(Seguranca::criptografarMD5($_POST['txtsenha']));
             $user->tipo = "visitante";
 
             $userDAO = new UserDAO();
             $userDAO->cadastrarUser($user);
 
             $prop = new Proprietario();
-            $prop->nome = Padronizacao::nomeSobrenome($_POST['txtnome'],$_POST['txtsobrenome']);
-            $prop->propriedade = $_POST['txtpropriedade'];
-            $prop->localizacao = $_POST['txtlocalizacao'];
-            $prop->municipio = $_POST['txtmunicipio'];
-            $prop->nContato = $_POST['txtncontato'];
+            $prop->nome = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome($_POST['txtnome'],$_POST['txtsobrenome']));
+            $prop->propriedade = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin($_POST['txtpropriedade']));
+            $prop->localizacao = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtlocalizacao'])));
+            $prop->municipio = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtmunicipio'])));
+            $prop->nContato = Padronizacao::validarNumTelefone($_POST['txtncontato']);
 
             $propDAO = new ProprietarioDAO();
             $propDAO->cadastrarProprietario($prop);

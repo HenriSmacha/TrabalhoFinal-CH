@@ -62,19 +62,19 @@ if(isset($_GET['id'])){
         ?>
         <form name="cadvaca" method="post" action="">
           <div class="form-group">
-            <input type="text" name="txtnanimal" placeholder="Nome do animal" class="form-control" value="<?php if(isset($v)){ echo $v->nAnimal; } ?>">
+            <input type="text" name="txtnanimal" placeholder="Nome do animal" class="form-control" value="<?php if(isset($v)){ echo $v->nAnimal; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtndeferro" placeholder="N° do ferro" class="form-control" value="<?php if(isset($v)){ echo $v->nDeFerro; } ?>">
+            <input type="text" name="txtndeferro" placeholder="N° do ferro" class="form-control" value="<?php if(isset($v)){ echo $v->nDeFerro; } ?>" pattern="^[0-9]{1,4}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtraca" placeholder="Raça" class="form-control" value="<?php if(isset($v)){ echo $v->raca; } ?>">
+            <input type="text" name="txtraca" placeholder="Raça" class="form-control" value="<?php if(isset($v)){ echo $v->raca; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="text" name="txtpelagem" placeholder="Pelagem" class="form-control" value="<?php if(isset($v)){ echo $v->pelagem; } ?>">
+            <input type="text" name="txtpelagem" placeholder="Pelagem" class="form-control" value="<?php if(isset($v)){ echo $v->pelagem; } ?>" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
           <div class="form-group">
-            <input type="number" name="txtidade" placeholder="Idade" class="form-control" value="<?php if(isset($v)){ echo $v->idade; } ?>">
+            <input type="number" name="txtidade" placeholder="Idade" class="form-control" value="<?php if(isset($v)){ echo $v->idade; } ?>" pattern="^[0-9]{1,4}$">
           </div>
           <div class="form-group">
             <input type="submit" name="alterar" value="Alterar" class="btn btn-primary">
@@ -87,14 +87,16 @@ if(isset($_GET['id'])){
             include_once 'modelo/vaca.class.php';
             include_once 'dao/vacadao.class.php';
             include 'util/padronizacao.class.php';
+            include 'util/seguranca.class.php';
+            include 'util/validacao.class.php';
 
             $v = new Vaca();
             $v->idVaca = $_GET['id'];
-            $v->nAnimal = Padronizacao::padronizarMaiMin($_POST['txtnanimal']);
-            $v->nDeFerro = $_POST['txtndeferro'];
-            $v->raca = Padronizacao::padronizarMaiMin($_POST['txtraca']);
-            $v->pelagem = Padronizacao::padronizarMaiMin($_POST['txtpelagem']);
-            $v->idade = $_POST['txtidade'];
+            $v->nAnimal = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtnanimal'])));
+            $v->nDeFerro = Padronizacao::validarNum($_POST['txtndeferro'];
+            $v->raca = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtraca']));
+            $v->pelagem = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtpelagem'])));
+            $v->idade = Padronizacao::validarNum($_POST['txtidade']);
 
             $vacaDAO = new VacaDAO();
             $vacaDAO->alterarVaca($v);

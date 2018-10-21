@@ -50,19 +50,19 @@ include_once 'util/helper.class.php';
       ?>
       <form name="cadpropr" method="post" action="">
         <div class="form-group">
-          <input type="text" name="txtnvaca" placeholder="Nome do animal" class="form-control">
+          <input type="text" name="txtnvaca" placeholder="Nome do animal" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
         </div>
         <div class="form-group">
-          <input type="text" name="txtndeferro" placeholder="N° do ferro" class="form-control">
+          <input type="text" name="txtndeferro" placeholder="N° do ferro" class="form-control" pattern="^[0-9]{1,4}$">
         </div>
         <div class="form-group">
-          <input type="text" name="txtraca" placeholder="Raça" class="form-control">
+          <input type="text" name="txtraca" placeholder="Raça" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
         </div>
         <div class="form-group">
-          <input type="text" name="txtpelagem" placeholder="Pelagem" class="form-control">
+          <input type="text" name="txtpelagem" placeholder="Pelagem" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
         </div>
         <div class="form-group">
-          <input type="number" name="numidade" placeholder="Idade" class="form-control">
+          <input type="number" name="numidade" placeholder="Idade" class="form-control" pattern="^[0-9]{1,4}$">
         </div>
         <div class="form-group">
           <input type="submit" name="cadastrar" value="Cadastrar" class="btn btn-primary">
@@ -74,13 +74,17 @@ include_once 'util/helper.class.php';
           include 'modelo/vaca.class.php';
           include 'dao/vacadao.class.php';
           include 'util/padronizacao.class.php';
+          include 'util/padronizacao.class.php';
+          include 'util/seguranca.class.php';
+          include 'util/validacao.class.php';
 
-          $vac = new Vaca();
-          $vac->nAnimal = $_POST['txtnvaca'];
-          $vac->nDeFerro = $_POST['txtndeferro'];
-          $vac->raca = $_POST['txtraca'];
-          $vac->pelagem = $_POST['txtpelagem'];
-          $vac->idade = $_POST['numidade'];
+          $v = new Vaca();
+          $v->idVaca = $_GET['id'];
+          $v->nAnimal = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtnanimal'])));
+          $v->nDeFerro = Padronizacao::validarNum($_POST['txtndeferro'];
+          $v->raca = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtraca']));
+          $v->pelagem = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtpelagem'])));
+          $v->idade = Padronizacao::validarNum($_POST['txtidade']);
 
           $vacDAO=new vacaDAO();
           $vacDAO->cadastrarVaca($vac);

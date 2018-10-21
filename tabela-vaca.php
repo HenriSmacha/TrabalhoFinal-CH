@@ -114,7 +114,7 @@ $array = $vacDAO->filtrar($_GET['id'],'codigo');
           <h5>Diag. gestação</h5>
           <div class="form-group">
             <input type="date" name="txtdiagdia" class="form-control">
-            <input type="text" name="txtdiagresul" placeholder="Positivo/Negativo" class="form-control">
+            <input type="text" name="txtdiagresul" placeholder="Positivo/Negativo" class="form-control" pattern="^(positivo|negativo|p|n|P|N|POSITOVO|NEGATIVO)$">
           </div>
           <h5>Data prov. do parto</h5>
           <div class="form-group">
@@ -123,9 +123,9 @@ $array = $vacDAO->filtrar($_GET['id'],'codigo');
           <h5>Parição</h5>
           <div class="form-group">
             <input type="date" name="txtparidia" placeholder="Dia" class="form-control">
-            <input type="text" name="txtparisex" placeholder="Sexo" class="form-control">
-            <input type="text" name="txtparinferro" placeholder="N° de ferro" class="form-control">
-            <input type="text" name="txtparitouro" placeholder="Touro" class="form-control">
+            <input type="text" name="txtparisex" placeholder="Sexo" class="form-control" pattern="^(macho|femea|m|f|M|F|MACHO|FEMEA)$">
+            <input type="text" name="txtparinferro" placeholder="N° de ferro" class="form-control" pattern="^[0-9]{1,4}$">
+            <input type="text" name="txtparitouro" placeholder="Touro" class="form-control" pattern="^[A-zÁ-ù ]{2,30}$">
           </div>
       <!-- SEGUNDA TABELA -->
         <h2>Dados reprodutivos</h2>
@@ -135,18 +135,18 @@ $array = $vacDAO->filtrar($_GET['id'],'codigo');
         </div>
         <h5>Litos/Mes</h5>
         <div class="form-group">
-          <input type="text" name="jan" placeholder="Jan" class="form-control">
-          <input type="text" name="fev" placeholder="Fev" class="form-control">
-          <input type="text" name="mar" placeholder="Mar" class="form-control">
-          <input type="text" name="abr" placeholder="Abr" class="form-control">
-          <input type="text" name="mai" placeholder="Mai" class="form-control">
-          <input type="text" name="jun" placeholder="Jun" class="form-control">
-          <input type="text" name="jul" placeholder="Jul" class="form-control">
-          <input type="text" name="ago" placeholder="Ago" class="form-control">
-          <input type="text" name="set" placeholder="Set" class="form-control">
-          <input type="text" name="out" placeholder="Out" class="form-control">
-          <input type="text" name="nov" placeholder="Nov" class="form-control">
-          <input type="text" name="dez" placeholder="Dez" class="form-control">
+          <input type="text" name="jan" placeholder="Jan" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="fev" placeholder="Fev" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="mar" placeholder="Mar" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="abr" placeholder="Abr" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="mai" placeholder="Mai" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="jun" placeholder="Jun" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="jul" placeholder="Jul" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="ago" placeholder="Ago" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="set" placeholder="Set" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="out" placeholder="Out" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="nov" placeholder="Nov" class="form-control" pattern="^[0-9.]{1,6}$">
+          <input type="text" name="dez" placeholder="Dez" class="form-control" pattern="^[0-9.]{1,6}$">
         </div>
         <h5>Data de secagem</h5>
         <div class="form-group">
@@ -164,18 +164,20 @@ $array = $vacDAO->filtrar($_GET['id'],'codigo');
             include 'modelo/tabelavaca.class.php';
             include 'util/padronizacao.class.php';
             include 'util/calculos.class.php';
+            include 'util/validacao.class.php';
+            include 'util/seguranca.class.php';
 
             $cvaca=new TabelaVaca();
             $cvaca->idControle = $_GET['idVaca'];
             $cvaca->cio = padronizacao::dataHora($_POST['txtciodia'],$_POST['txtciohora']);
             $cvaca->cobIns = padronizacao::dataHora($_POST['txtcoindia'],$_POST['txtcoinhora']);
             $cvaca->diagDia = $_POST['txtdiagdia'];
-            $cvaca->diagResul = $_POST['txtdiagresul'];
+            $cvaca->diagResul = Validacao::validarPN($_POST['txtdiagresul']);
             $cvaca->provavelD = $_POST['txtprovalD'];
             $cvaca->pariDia = $_POST['txtparidia'];
             $cvaca->pariSex = $_POST['txtparisex'];
-            $cvaca->pariNun = $_POST['txtparinferro'];
-            $cvaca->pariTouro = $_POST['txtparitouro'];
+            $cvaca->pariNun = Validacao::validarNum($_POST['txtparinferro']);
+            $cvaca->pariTouro = Validacao::validarFrase($_POST['txtparitouro']);
             $cvaca->pariDTotal = Calculos::lactacaoDias($_POST['txtparidia'],$_POST['txtdiagdia']);
             $cvaca->controle = $_POST['txtcontr'];
             $cvaca->meses = Padronizacao::arrayMeses($_POST['jan'],$_POST['fev'],$_POST['mar'],$_POST['abr'],$_POST['mai'],$_POST['jun'],$_POST['jul'],$_POST['ago'],$_POST['set'],$_POST['out'],$_POST['nov'],

@@ -11,7 +11,7 @@ class Padronizacao {
     return $nome;
   }
 
-  public static function dataHora($d,$h){
+  public static function padronizardataHora($d,$h){
     $array = array($d,$h);
     $padDH = implode(" ",$array);
     return $padDH;
