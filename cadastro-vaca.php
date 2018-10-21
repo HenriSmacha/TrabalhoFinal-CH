@@ -2,6 +2,21 @@
 session_start();
 ob_start();
 include_once 'util/helper.class.php';
+
+// if(!isset($_SESSION['privateUser'])){
+//
+//     $_SESSION['msg'] = "Você precisa estar logado!";
+//     return;
+// }else if(isset($_SESSION['privateUser'])){
+//   include_once 'modelo/user.class.php';
+//
+//   $user = unserialize($_SESSION['privateUser']);
+//   if($user->tipo != 'adm'){
+//     $_SESSION['msg'] = "Você precisa estar logado!";
+//     header("location:index.php");
+//     return;
+//   }else{
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -80,10 +95,10 @@ include_once 'util/helper.class.php';
 
           $v = new Vaca();
           $v->idVaca = $_GET['id'];
-          $v->nAnimal = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtnanimal'])));
-          $v->nDeFerro = Padronizacao::validarNum($_POST['txtndeferro'];
-          $v->raca = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtraca']));
-          $v->pelagem = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtpelagem'])));
+          $v->nAnimal = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtnanimal']))));
+          $v->nDeFerro = Padronizacao::validarNum($_POST['txtndeferro']);
+          $v->raca = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtraca']))));
+          $v->pelagem = Seguranca::anttiEspSQLInjection(Padronizacao::nomeSobrenome(Validacao::validarFrase(Padronizacao::padronizarMaiMin($_POST['txtpelagem']))));
           $v->idade = Padronizacao::validarNum($_POST['txtidade']);
 
           $vacDAO=new vacaDAO();

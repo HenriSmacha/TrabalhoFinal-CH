@@ -32,15 +32,6 @@ include_once 'util/helper.class.php';
               <li class="nav-item">
                 <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Proprietário <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</a>
-              </li>
             </ul>
           </div>
         </nav>
@@ -101,15 +92,15 @@ include_once 'util/helper.class.php';
             $prop->propriedade = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin($_POST['txtpropriedade']));
             $prop->localizacao = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtlocalizacao'])));
             $prop->municipio = Seguranca::anttiEspSQLInjection(Padronizacao::padronizarMaiMin(Validacao::validarFrase($_POST['txtmunicipio'])));
-            $prop->nContato = Padronizacao::validarNumTelefone($_POST['txtncontato']);
+            $prop->nContato = Validacao::validarNumTelefone($_POST['txtncontato']);
 
             $propDAO = new ProprietarioDAO();
             $propDAO->cadastrarProprietario($prop);
 
-            echo "<br>".$prop;
-            // $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
-            // ob_end_flush();
-            // header("location:cadastro-proprietario.php");
+            // echo "<br>".$prop;
+            $_SESSION['msg'] = "Proprietário cadastrado com sucesso!";
+            ob_end_flush();
+            header("location:index.php");
          }
         ?>
     </div>

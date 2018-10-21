@@ -6,11 +6,7 @@ include_once 'dao/proprietariodao.class.php';
 include_once 'modelo/proprietario.class.php';
 include_once 'util/helper.class.php';
 
-if(!isset($_SESSION['privateUser'])){
-
-    $_SESSION['msg'] = "Você precisa estar logado!";
-    return;
-}else if(isset($_SESSION['privateUser'])){
+ if(isset($_SESSION['privateUser'])){
   include_once 'modelo/user.class.php';
 
   $user = unserialize($_SESSION['privateUser']);

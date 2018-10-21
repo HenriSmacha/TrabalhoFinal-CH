@@ -17,32 +17,7 @@ include_once 'util/helper.class.php';
   <div class="container">
     <h1 class="jumbotron bg-info">Seja bem vindo!</h1>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Sistema</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Propietário</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</span></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
 
     <h2>Cadastro de Proprietários para administrar cruza e lactase de gado leiteiro!</h2>
 
@@ -83,6 +58,34 @@ include_once 'util/helper.class.php';
     </form>
     <?php
     }else{
+    ?>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Sistema</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cadastro-proprietario.php">Cadastrar Propietário</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="cadastro-vaca.php">Cadastrar Vaca</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="consultar-vaca.php">Consultar Vacas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="consultar-proprietario.php">Consultar Proprietários</span></a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <?php
       include_once 'modelo/user.class.php';
 
       $user = unserialize($_SESSION['privateUser']);
@@ -99,8 +102,7 @@ include_once 'util/helper.class.php';
         header("location:index.php");
       }
     }
-    ?>
-    <?php
+    
     if(isset($_POST['entrar'])){
       include_once 'modelo/user.class.php';
       include_once 'dao/userdao.class.php';

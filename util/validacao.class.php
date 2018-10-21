@@ -1,5 +1,5 @@
 <?php
-calss Validacao{
+class Validacao{
 
   public static function validarFrase($v){
   $exp = '/^[A-zÁ-ù ]{2,30}$/';

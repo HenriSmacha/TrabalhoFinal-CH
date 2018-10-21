@@ -6,7 +6,6 @@ class Seguranca {
   }
 
   public static function anttiEspSQLInjection($v){
-    $exp = addslashes(trim($v));
-    return preg_match($exp,$v);
+    return addslashes(trim($v));
   }
 }
